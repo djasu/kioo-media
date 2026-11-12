@@ -1,0 +1,43 @@
+rubriques:
+  - slug: societe
+    nom: Société
+    description: Les grands mouvements et les faits de société qui touchent la vie quotidienne des Congolaises et des Congolais.
+  - slug: pauvrete-et-debrouille
+    nom: Pauvreté et débrouille
+    description: Le coût de la vie, le petit commerce, l'endettement, l'accès aux droits et les stratégies de débrouille.
+  - slug: sante
+    nom: Santé
+    description: L'accès aux soins, le coût des traitements, la santé maternelle et la santé mentale.
+  - slug: education-et-jeunesse
+    nom: Éducation et jeunesse
+    description: Les frais scolaires, l'abandon scolaire, les filles à l'école et l'avenir des jeunes.
+  - slug: emploi
+    nom: Emploi
+    description: Le travail, le chômage, l'insertion des jeunes diplômés et les métiers informels.
+  - slug: femmes-et-egalite
+    nom: Femmes et égalité
+    description: La place des femmes dans l'économie, les violences qu'elles subissent, leurs initiatives et leurs réussites.
+  - slug: deplaces-et-vie-en-temps-de-crise
+    nom: Déplacés et vie en temps de crise
+    description: Le quotidien des personnes déplacées et la cohabitation avec les communautés d'accueil.
+  - slug: eau-electricite-services-essentiels
+    nom: Eau, électricité et services essentiels
+    description: L'accès à l'eau, à l'électricité, au transport et à la salubrité des quartiers.
+  - slug: solidarites-et-initiatives-locales
+    nom: Solidarités et initiatives locales
+    description: Les associations, mutuelles et initiatives citoyennes qui changent concrètement les choses.
+  - slug: temoignages
+    nom: Témoignages
+    description: La parole des personnes directement concernées, recueillie avec leur accord.
+  - slug: portraits
+    nom: Portraits
+    description: Des personnes, leurs parcours et leurs combats quotidiens.
+  - slug: enquetes
+    nom: Enquêtes
+    description: Des sujets approfondis, documentés, vérifiés et sourcés.
+  - slug: journalisme-de-solutions
+    nom: Journalisme de solutions
+    description: Ce qui fonctionne, à quelles conditions et avec quelles limites.
+  - slug: regard-en-images
+    nom: Regard en images
+    description: Photographies, portraits et galeries de terrain.

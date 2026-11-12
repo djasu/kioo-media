@@ -1,0 +1,31 @@
+{
+  "name": "KIOO Média",
+  "slogan": "Le miroir de nos réalités",
+  "description": "KIOO Média est un média indépendant de journalisme social basé à Goma (RDC). Il informe, explique et donne la parole aux personnes directement concernées par les réalités sociales congolaises.",
+  "url": "",
+  "basePath": "",
+  "demo": true,
+  "contact": {
+    "email": "veroniquefaida95@gmail.com",
+    "phone": "+243 971 797 298",
+    "address": "Goma, Nord-Kivu"
+  },
+  "social": {
+    "facebook": "",
+    "whatsapp": "",
+    "linkedin": "",
+    "youtube": "",
+    "instagram": "",
+    "x": ""
+  },
+  "forms": {
+    "web3formsKey": "",
+    "contactAction": "",
+    "attachments": false,
+    "newsletterAction": ""
+  },
+  "comments": {
+    "enabled": false,
+    "action": ""
+  }
+}

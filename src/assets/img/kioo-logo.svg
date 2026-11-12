@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="2000" height="1120">
+<g transform="translate(20,10)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="46">
+  <path d="M110 70 V330" stroke="#0F4C5C"/>
+  <path d="M225 150 L118 250 L232 330" stroke="#0F4C5C"/>
+  <path d="M340 152 V330" stroke="#0F4C5C"/>
+  <circle cx="340" cy="72" r="30" fill="#E3762B" stroke="none"/>
+  <circle cx="525" cy="240" r="90" stroke="#0F4C5C"/>
+  <g>
+    <path d="M848 300 L905 372 L800 330 Z" fill="#E3762B" stroke="#E3762B" stroke-width="14"/>
+    <circle cx="785" cy="240" r="90" stroke="#E3762B"/>
+    <path d="M741 226 A46 46 0 0 1 771 196" stroke="#E3762B" stroke-width="16"/>
+  </g>
+</g>
+<text x="500" y="452" text-anchor="middle" font-family="Inter" font-weight="700" font-size="44" letter-spacing="26" fill="#0F4C5C">MÉDIA</text>
+<text x="500" y="510" text-anchor="middle" font-family="Inter" font-weight="500" font-size="34" fill="#4A5A60">Le miroir de nos réalités</text>
+</svg>

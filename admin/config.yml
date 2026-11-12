@@ -1,0 +1,227 @@
+# Espace d'administration KIOO Média (Decap CMS) – configuration.
+# Les valeurs entre [crochets] sont à compléter à la mise en ligne (voir README.md).
+
+backend:
+  name: github
+  repo: "[compte-github]/[depot-kioo-media]"   # à compléter
+  branch: main
+  # base_url: "[URL du service d'authentification OAuth]"   # à compléter si l'hébergeur n'en fournit pas
+
+locale: fr
+site_url: "[https://adresse-du-site]"          # à compléter
+display_url: "[https://adresse-du-site]"       # à compléter
+logo_url: /assets/img/kioo-logo.png
+
+# Circuit éditorial : Brouillon → En relecture → Prêt. La publication = « Publier »,
+# réservée aux personnes ayant les droits d'écriture (voir README, partie « Rôles »).
+publish_mode: editorial_workflow
+
+media_folder: static/uploads      # dossier des images, documents, audios et vidéos téléversés
+public_folder: /uploads
+
+collections:
+  # ------------------------------------------------------------------ ARTICLES
+  - name: articles
+    label: Articles
+    label_singular: Article
+    folder: content/articles
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{format}} · {{titre}}"
+    sortable_fields: [date, titre, format]
+    fields:
+      - { name: titre, label: Titre précis, widget: string }
+      - { name: format, label: Format, widget: select, options: [Reportage, Enquête, Interview, Portrait, Témoignage, Analyse, Explication, Journalisme de solutions, Opinion], hint: "Les contenus « Opinion » sont affichés à part, clairement séparés de l'information." }
+      - name: rubrique
+        label: Rubrique
+        widget: relation
+        collection: reglages
+        file: rubriques
+        search_fields: ["rubriques.*.nom"]
+        display_fields: ["rubriques.*.nom"]
+        value_field: "rubriques.*.nom"
+      - { name: chapo, label: Chapô (résumé introductif), widget: text }
+      - { name: date, label: Date et heure de publication, widget: datetime, picker_utc: true, hint: "Une date future programme la publication : l'article apparaît automatiquement à cette date (le site est reconstruit toutes les heures)." }
+      - { name: maj, label: Date de mise à jour, widget: datetime, picker_utc: true, required: false }
+      - { name: maj_note, label: Mention de correction ou de mise à jour, widget: text, required: false, hint: "Affichée en tête de l'article. Toute correction doit être signalée." }
+      - name: auteur
+        label: Auteur ou autrice
+        widget: relation
+        collection: reglages
+        file: auteurs
+        search_fields: ["auteurs.*.nom"]
+        display_fields: ["auteurs.*.nom"]
+        value_field: "auteurs.*.slug"
+      - { name: lieu, label: Lieu (seulement si sa publication est sans danger), widget: string, required: false }
+      - { name: mots_cles, label: Mots-clés, widget: list, default: [], required: false }
+      - { name: une, label: Mettre en grande « une » (accueil), widget: boolean, default: false, required: false }
+      - { name: a_la_une, label: Afficher dans « À la une », widget: boolean, default: false, required: false }
+      - { name: avertissement, label: Note de prudence / avertissement de contenu (sujets sensibles), widget: text, required: false }
+      - { name: brouillon, label: Ne pas publier (garder en brouillon), widget: boolean, default: false, required: false }
+      - name: image
+        label: Image principale
+        widget: object
+        required: false
+        fields:
+          - { name: src, label: Fichier image, widget: image, required: false, hint: "Optimisée automatiquement (WebP, plusieurs tailles). Préférer une image de moins de 3 Mo." }
+          - { name: alt, label: Texte alternatif (décrit l'image pour les lecteurs d'écran), widget: string }
+          - { name: legende, label: Légende, widget: string }
+          - { name: credit, label: Crédit photo, widget: string }
+          - { name: date, label: Date de la prise de vue, widget: string, required: false }
+          - { name: lieu, label: Lieu (si sans danger), widget: string, required: false }
+          - { name: autorisation, label: Autorisation obtenue de la personne identifiable, widget: boolean, default: false, required: false }
+      - name: corps
+        label: Contenu de l'article
+        widget: list
+        required: false
+        hint: "Ajoutez des blocs dans l'ordre. Distinguez clairement faits, témoignages, analyse et opinion."
+        types:
+          - label: Texte
+            name: texte
+            widget: object
+            fields: [{ name: texte, label: Texte, widget: markdown, buttons: [bold, italic, link, bulleted-list, numbered-list] }]
+          - label: Intertitre
+            name: intertitre
+            widget: object
+            fields: [{ name: texte, label: Intertitre, widget: string }]
+          - label: Citation mise en valeur
+            name: citation
+            widget: object
+            fields: [{ name: texte, label: Citation, widget: text }, { name: source, label: Qui parle, widget: string, required: false }]
+          - label: Témoignage
+            name: temoignage
+            widget: object
+            fields:
+              - { name: qui, label: Qui témoigne (prénom d'emprunt si anonymat), widget: string }
+              - { name: texte, label: Témoignage, widget: markdown, buttons: [bold, italic] }
+              - { name: consentement, label: Consentement recueilli, widget: boolean, default: false }
+              - { name: anonymat, label: Précision (ex. « Le prénom a été modifié. »), widget: string, required: false }
+          - label: Faits vérifiés
+            name: fait
+            widget: object
+            fields: [{ name: texte, label: Faits établis, widget: markdown, buttons: [bold, italic, link, bulleted-list] }]
+          - label: Analyse
+            name: analyse
+            widget: object
+            fields: [{ name: texte, label: Analyse, widget: markdown, buttons: [bold, italic, link, bulleted-list] }]
+          - label: Encadré
+            name: encadre
+            widget: object
+            fields: [{ name: titre, label: Titre de l'encadré, widget: string, default: À savoir }, { name: texte, label: Texte, widget: markdown, buttons: [bold, italic, link, bulleted-list] }]
+          - label: Image
+            name: image
+            widget: object
+            fields: &img_fields
+              - { name: src, label: Fichier image, widget: image }
+              - { name: alt, label: Texte alternatif, widget: string }
+              - { name: legende, label: Légende, widget: string }
+              - { name: credit, label: Crédit photo, widget: string }
+              - { name: date, label: Date, widget: string, required: false }
+              - { name: lieu, label: Lieu (si sans danger), widget: string, required: false }
+              - { name: autorisation, label: Autorisation de la personne identifiable obtenue, widget: boolean, default: false, required: false }
+          - label: Galerie photo
+            name: galerie
+            widget: object
+            fields:
+              - { name: titre, label: Titre de la galerie, widget: string, required: false }
+              - { name: images, label: Images, widget: list, fields: *img_fields }
+          - label: Infographie
+            name: infographie
+            widget: object
+            fields: *img_fields
+          - label: Vidéo
+            name: video
+            widget: object
+            fields:
+              - { name: youtube, label: Lien YouTube (laisser vide si fichier), widget: string, required: false }
+              - { name: fichier, label: Fichier vidéo court (smartphone), widget: file, required: false }
+              - { name: poster, label: Image d'aperçu, widget: image, required: false }
+              - { name: titre, label: Titre, widget: string, required: false }
+              - { name: legende, label: Légende, widget: string, required: false }
+          - label: Audio
+            name: audio
+            widget: object
+            fields: [{ name: fichier, label: Fichier audio, widget: file }, { name: titre, label: Titre, widget: string }]
+          - label: Document à télécharger
+            name: document
+            widget: object
+            fields: [{ name: fichier, label: Fichier, widget: file }, { name: titre, label: Titre du document, widget: string }]
+      - name: sources
+        label: Sources citées
+        widget: list
+        required: false
+        fields:
+          - { name: titre, label: Source (personne, document, organisation), widget: string }
+          - { name: url, label: Lien (si disponible), widget: string, required: false }
+          - { name: type, label: Type (témoignage, rapport, donnée publique…), widget: string, required: false }
+      - name: documents
+        label: Documents utilisés (liés à l'article)
+        widget: list
+        required: false
+        fields: [{ name: titre, label: Titre, widget: string }, { name: fichier, label: Fichier, widget: file }]
+      - name: verification
+        label: Vérification et droit de réponse
+        widget: object
+        required: false
+        fields:
+          - { name: statut, label: Comment l'information a été vérifiée, widget: text, required: false }
+          - { name: droit_de_reponse, label: Droit de réponse (personnes contactées, date, réponse), widget: text, required: false }
+
+  # -------------------------------------------------------------------- PAGES
+  - name: pages
+    label: Pages du site
+    files:
+      - { name: a-propos, label: À propos, file: content/pages/a-propos.md, fields: &page_fields [{ name: titre, label: Titre, widget: string }, { name: description, label: Description (affichée sous le titre et dans Google), widget: text }, { name: body, label: Contenu, widget: markdown }] }
+      - { name: charte-ethique, label: Notre charte éthique, file: content/pages/charte-ethique.md, fields: *page_fields }
+      - { name: methodologie-verification, label: Méthodologie et vérification, file: content/pages/methodologie-verification.md, fields: *page_fields }
+      - { name: soutenir, label: Soutenir KIOO Média, file: content/pages/soutenir.md, fields: *page_fields }
+      - { name: confidentialite, label: Politique de confidentialité, file: content/pages/confidentialite.md, fields: *page_fields }
+      - { name: mentions-legales, label: Mentions légales, file: content/pages/mentions-legales.md, fields: *page_fields }
+
+  # ----------------------------------------------------------------- RÉGLAGES
+  - name: reglages
+    label: Réglages
+    files:
+      - name: site
+        label: Coordonnées, réseaux sociaux et formulaires
+        file: data/site.json
+        fields:
+          - { name: name, label: Nom du média, widget: string }
+          - { name: slogan, label: Slogan, widget: string }
+          - { name: description, label: Description du site (Google, partage), widget: text }
+          - { name: url, label: Adresse du site (ex. https://…), widget: string, required: false }
+          - { name: demo, label: "Mode démonstration (affiche « Exemple », bloque Google). Décocher au lancement.", widget: boolean }
+          - name: contact
+            label: Coordonnées
+            widget: object
+            fields: [{ name: email, label: Adresse e-mail officielle, widget: string, required: false }, { name: phone, label: Numéro professionnel, widget: string, required: false }, { name: address, label: Adresse ou localisation, widget: string, required: false }]
+          - name: social
+            label: Réseaux sociaux (liens complets)
+            widget: object
+            fields: [{ name: facebook, label: Facebook, widget: string, required: false }, { name: whatsapp, label: WhatsApp ou chaîne WhatsApp, widget: string, required: false }, { name: linkedin, label: LinkedIn, widget: string, required: false }, { name: youtube, label: YouTube, widget: string, required: false }, { name: instagram, label: Instagram, widget: string, required: false }, { name: x, label: X (si le compte existe), widget: string, required: false }]
+          - name: forms
+            label: Formulaires
+            widget: object
+            fields: [{ name: web3formsKey, label: Clé d'accès Web3Forms (formulaire de contact), widget: string, required: false, hint: 'Clé publique reçue par e-mail sur web3forms.com' }, { name: attachments, label: Autoriser les pièces jointes (offre payante Web3Forms), widget: boolean, default: false, required: false }, { name: contactAction, label: Autre service de formulaire (adresse d'envoi), widget: string, required: false }, { name: newsletterAction, label: Adresse d'inscription à la newsletter, widget: string, required: false }]
+          - name: comments
+            label: Commentaires
+            widget: object
+            fields: [{ name: enabled, label: Activer les commentaires (modérés), widget: boolean, default: false }, { name: action, label: Adresse du service de commentaires, widget: string, required: false }]
+      - name: rubriques
+        label: Rubriques (ajouter ou modifier)
+        file: content/rubriques.yml
+        fields:
+          - name: rubriques
+            label: Rubriques
+            widget: list
+            fields: [{ name: slug, label: Identifiant court dans l'adresse (sans accent ni espace), widget: string }, { name: nom, label: Nom affiché, widget: string }, { name: description, label: Description, widget: text }]
+      - name: auteurs
+        label: Auteurs et autrices
+        file: content/auteurs.yml
+        fields:
+          - name: auteurs
+            label: Auteurs et autrices
+            widget: list
+            fields: [{ name: slug, label: Identifiant court, widget: string }, { name: nom, label: Nom affiché, widget: string }, { name: role, label: Fonction, widget: string, required: false }, { name: bio, label: Courte présentation, widget: text, required: false }, { name: exemple, label: Auteur fictif d'exemple, widget: boolean, required: false, default: false }]

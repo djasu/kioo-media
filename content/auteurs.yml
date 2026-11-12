@@ -1,0 +1,10 @@
+auteurs:
+  - slug: faida-shamba-veronique
+    nom: Faida Shamba Véronique
+    role: Fondatrice et directrice de la publication
+    bio: Diplômée en Sciences de l'Information et de la Communication à l'Université de Goma (UNIGOM). Fondatrice de KIOO Média.
+  - slug: auteur-exemple
+    nom: "[Nom de l'auteur ou de l'autrice]"
+    role: "[Fonction]"
+    bio: "[Courte présentation de l'auteur ou de l'autrice, à compléter.]"
+    exemple: true

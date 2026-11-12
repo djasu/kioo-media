@@ -1,0 +1,18 @@
+{
+  "name": "kioo-media",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KIOO Média - Le miroir de nos réalités. Site statique de journalisme social (Goma, RDC).",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && node serve.mjs",
+    "serve": "node serve.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.1.0",
+    "js-yaml": "^4.1.0",
+    "marked": "^12.0.2",
+    "sharp": "^0.33.5"
+  }
+}
